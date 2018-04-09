@@ -1,0 +1,8 @@
+---
+- name: Move config 1 to server
+  copy:
+    src: "{{ role_path }}/stellar-core.cfg"
+    dest: /home/ryan/stellar-core.cfg
+    owner: ryan
+    group: ryan
+    mode: 0744

@@ -1,0 +1,29 @@
+---
+- name: Set up stellar on all nodes
+  hosts: all
+  become: true
+
+  roles:
+      - stellar
+
+- name: Add config 1 to server and start stellar-core
+  hosts: server
+  become: false
+
+  roles:
+      - config1
+
+- name: Add config 2 to workstation and start stellar-core
+  hosts: workstation
+  become: false
+
+  roles:
+      - config2
+
+- name: Add config 3 to laptop and start stellar-core
+  hosts: laptop
+  become: false
+
+  roles:
+      - config3
+

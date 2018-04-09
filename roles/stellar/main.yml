@@ -1,0 +1,38 @@
+---
+- name: Update repositories and install packages
+  apt: name={{item}} state=installed update_cache=yes
+  with_items:
+    - git
+    - build_essential
+    - pkg-config
+    - autoconf
+    - automake
+    - libtool
+    - bison
+    - flex
+    - libpq-dev
+    - clang++-3.5
+    - gcc-4.9
+    - g++
+    - cpp
+    - tcpdump
+  become: yes
+
+- name: Clone stellar-core repository
+  git:
+    repo: 'https://github.com/stellar/stellar-core.git'
+    dest: /home/ryan/stellar-core
+    recursive: yes
+
+- name: Autogenerate stellar configure script
+  command: chdir=/home/ryan/stellar-core ./autogen.sh
+
+- name: Configure stellar-core
+  command: chdir=/home/ryan/stellar-core ./configure
+
+- name: build stellar-core
+  command: chdir=/home/ryan/stellar-core make -j 4
+
+- name: install stellar-core
+  command: chdir=/home/ryan/stellar-core make install
+  become: yes
